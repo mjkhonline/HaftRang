@@ -1,28 +1,67 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div id="app">
+        <header-card></header-card>
+        <photo-uploader-card v-model="imageURL"></photo-uploader-card>
+        <preview-card v-if="imageURL" @imageLoaded="updateImage" :imageURL="imageURL"></preview-card>
+        <palettes-card :palettes="palettes"></palettes-card>
+        <control-card v-if="imageURL" :palettesCount="palettesCount"></control-card>
+    </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+    import HeaderCard from "./components/HeaderCard";
+    import PreviewCard from "./components/PreviewCard";
+    import PalettesCard from "./components/PalettesCard";
+    import cti from "./components/ColorThiefInterface";
+    import ControlCard from "./components/ControlCard";
+    import {eventBus} from './main';
+    import PhotoUploaderCard from "./components/PhotoUploaderCard";
+    import VueScrollTo from 'vue-scrollto';
+
+    export default {
+        name: 'App',
+        data() {
+            return {
+                imageSource: null,
+                imageURL: null,
+                palettesCount: 5,
+                palettes: []
+            }
+        },
+        methods: {
+            updateImage(img) {
+                this.imageSource = img;
+                this.getPalettes();
+            },
+            updatePalettesCount(newValue) {
+                this.palettesCount = parseInt(newValue);
+                this.getPalettes();
+            },
+            getPalettes() {
+                if (this.imageSource) {
+                    this.palettes = cti.methods.getPalettes(this.imageSource, this.palettesCount);
+                    VueScrollTo.scrollTo('#palettesCard', 1000, {'easing': 'ease-in-out','force':false});
+                } else
+                    this.palettes = [];
+            }
+        },
+
+        computed: {},
+        components: {
+            PhotoUploaderCard,
+            ControlCard,
+            ColorThiefInterface: cti,
+            PalettesCard,
+            PreviewCard,
+            HeaderCard
+        },
+        created() {
+            eventBus.$on('palettesCountUpdated', this.updatePalettesCount);
+        }
+    }
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+    @import "./assets/sass/base";
 </style>

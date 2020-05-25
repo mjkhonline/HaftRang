@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css?family=Saira+Semi+Condensed|Source+Sans+Pro&display=swap&subset=latin-ext');
+$normal-font-family: 'Source Sans Pro',  sans-serif;
+$header-font-family: 'Saira Semi Condensed', sans-serif;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: $normal-font-family;
+  direction: ltr;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $header-font-family;
+}
+
+.btn{
+  font-family: $header-font-family;
+}
