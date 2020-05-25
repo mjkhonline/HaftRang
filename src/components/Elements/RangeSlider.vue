@@ -3,7 +3,7 @@
         <div class="range-slider">
             <span class="rs-label">{{value}}</span>
             <input class="rs-range" type="range" title="adjust number of palettes to extract"
-                   :value="value" @input="updatePalettesCount($event.target.value)" :min="minValue" :max="maxValue">
+                   :value="value" @change="updatePalettesCount($event.target.value)" :min="minValue" :max="maxValue">
         </div>
         <div class="box-minmax">
             <span>{{minValue}}</span><span>{{maxValue}}</span>

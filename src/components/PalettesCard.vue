@@ -1,9 +1,10 @@
 <template>
-    <div class="row justify-content-center my-5" v-show="palettes" id="palettesCard">
-        <div v-for="color in palettes" class="col color-preview" :style="{backgroundColor: color}">
+    <transition-group v-show="palettes" name="color-preview" tag="div" class="row justify-content-center my-5"
+                      id="palettesCard">
+        <div v-for="color in palettes" :key="color" class="col color-preview" :style="{backgroundColor: color}">
             <p>{{color | capitalize}}</p>
         </div>
-    </div>
+    </transition-group>
 </template>
 
 <script>
@@ -28,12 +29,25 @@
     .color-preview {
         height: 8em;
         margin: 0;
+        transition: all 1s; // for animation
 
         p {
             text-align: center;
             position: relative;
             top: 3.3em;
             text-shadow: 0 0 10px #bbb;
+            color: black;
         }
     }
+
+    .color-preview-enter, .color-preview-leave-to {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    .color-preview-leave-active {
+        position: absolute;
+    }
+
+
 </style>

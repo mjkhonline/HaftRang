@@ -1,8 +1,12 @@
 <template>
     <div id="app">
         <header-card></header-card>
-        <photo-uploader-card v-model="imageURL"></photo-uploader-card>
-        <preview-card v-if="imageURL" @imageLoaded="updateImage" :imageURL="imageURL"></preview-card>
+        <transition name="fade" type="transition" appear>
+            <photo-uploader-card v-model="imageURL"></photo-uploader-card>
+        </transition>
+        <transition name="fade" type="transition">
+            <preview-card v-if="imageURL" @imageLoaded="updateImage" :imageURL="imageURL"></preview-card>
+        </transition>
         <palettes-card :palettes="palettes"></palettes-card>
         <control-card v-if="imageURL" :palettesCount="palettesCount"></control-card>
     </div>
@@ -41,7 +45,7 @@
             getPalettes() {
                 if (this.imageSource) {
                     this.palettes = cti.methods.getPalettes(this.imageSource, this.palettesCount);
-                    VueScrollTo.scrollTo('#palettesCard', 1000, {'easing': 'ease-in-out','force':false});
+                    VueScrollTo.scrollTo('#palettesCard', 1000, {'easing': 'ease-in-out', 'force': false});
                 } else
                     this.palettes = [];
             }
@@ -64,4 +68,21 @@
 
 <style lang="scss">
     @import "./assets/sass/base";
+
+    .fade-enter {
+        opacity: 0;
+    }
+
+    .fade-enter-active {
+        transition: opacity 700ms;
+    }
+
+    .fade-leave {
+
+    }
+
+    .fade-leave-active {
+        transition: opacity 500ms;
+        opacity: 0;
+    }
 </style>
