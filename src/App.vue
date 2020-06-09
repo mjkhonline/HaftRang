@@ -22,6 +22,7 @@
     import {eventBus} from './main';
     import PhotoUploaderCard from "./components/PhotoUploaderCard";
     import VueScrollTo from 'vue-scrollto';
+    import axios from 'axios';
 
     export default {
         name: 'App',
@@ -41,6 +42,9 @@
             updatePalettesCount(newValue) {
                 this.palettesCount = parseInt(newValue);
                 this.getPalettes();
+                axios.put('https://rang-ir.firebaseio.com/palettes/count.json',this.palettesCount).then(
+                    response => console.log(response)
+                ).catch(e => console.log(e));
             },
             getPalettes() {
                 if (this.imageSource) {
@@ -62,6 +66,9 @@
         },
         created() {
             eventBus.$on('palettesCountUpdated', this.updatePalettesCount);
+            axios.get('https://rang-ir.firebaseio.com/palettes/count.json').then(
+                response => this.palettesCount = response.data
+            ).catch(e => console.log(e));
         }
     }
 </script>
