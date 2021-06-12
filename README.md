@@ -1,5 +1,6 @@
 # haftrang
-
+This project is live on: https://7rang.netlify.app
+Auto built and deployment is activated on push to master.
 ## Project setup
 ```
 npm install
