@@ -1,6 +1,6 @@
 <template>
     <div class="row justify-content-center">
-        <div class="col-12 col-md-8">
+        <div class="col-12 col-md-8 d-flex justify-content-center">
             <img ref="imgPreview" @load="updateImage" id="img-preview" alt="uploaded photo preview"
                  :src="imageURL"/>
         </div>

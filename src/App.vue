@@ -9,12 +9,14 @@
         </transition>
         <palettes-card :palettes="palettes"></palettes-card>
         <control-card v-if="imageURL" :palettesCount="palettesCount"></control-card>
+        <footer-card></footer-card>
     </div>
 </template>
 
 <script>
 
     import HeaderCard from "./components/HeaderCard";
+    import FooterCard from "./components/FooterCard";
     import PreviewCard from "./components/PreviewCard";
     import PalettesCard from "./components/PalettesCard";
     import cti from "./components/ColorThiefInterface";
@@ -62,7 +64,8 @@
             ColorThiefInterface: cti,
             PalettesCard,
             PreviewCard,
-            HeaderCard
+            HeaderCard,
+            FooterCard
         },
         created() {
             eventBus.$on('palettesCountUpdated', this.updatePalettesCount);
